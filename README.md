@@ -63,3 +63,11 @@ corresponding value to 1, it is indicating that its region of the Sudoku puzzle
 is valid. A value of 0 would indicate otherwise. When all worker threads have
 completed, the parent thread checks each entry in the result array to determine
 if the Sudoku puzzle is valid.
+
+## Examples 
+
+This repository includes some examples in *Python* to understand the functionality 
+of thread library and another options. For example: 
+- threadingUsingClass.py
+- threadingUsingFunction.py
+- threadingMethods.py
