@@ -18,6 +18,10 @@ Sudoku puzzle. However, you are welcome to create even more threads for
 this project. For example, rather than creating one thread that checks all nine columns, 
 you could create nine separate threads and have each of them check one column.
 >
+> ![image](https://github.com/SkinnyDeiv/Sudoku/blob/master/images/sudokuInput.png)
+>
+> **Figure 4.19** Solution to a 9 × 9 Sudoku puzzle
+>
 > ## Passing Parameters to Each Thread
 >
 > The parent thread will create the worker threads, passing each worker the
