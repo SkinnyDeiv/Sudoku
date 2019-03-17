@@ -67,7 +67,7 @@ if the Sudoku puzzle is valid.
 ## Examples 
 
 This repository includes some examples in *Python* to understand the functionality 
-of thread library and another options. For example: 
+of thread library and its options. For example: 
 - threadingUsingClass.py
 - threadingUsingFunction.py
 - threadingMethods.py
