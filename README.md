@@ -71,6 +71,9 @@ of thread library and its options. For example:
 - threadingUsingClass.py
 - threadingUsingFunction.py
 - threadingMethods.py
+- joinMethodFast.py
+- joinMethodSlow.py
+- timeThread.py
 
 ## References
 *Siva, C. S. (2018, 14 noviembre). Python Thread Tutorial (Part 1). Recuperado 16 marzo, 2019, de https://dzone.com/articles/python-thread-part-1*
