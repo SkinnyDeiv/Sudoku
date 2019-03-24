@@ -19,7 +19,6 @@ sudoku_number = 9
 totalFlags = []
 listThreads = []
 
-
 # Check only the rows from later to do the analysis.
 def checkRows(grid):
     for i in range(sudoku_number):
@@ -40,18 +39,29 @@ def checkColumns(grid):
 
 # Check each sub grid from later to do the analysis
 def checkSubGrids(grid):
-    beginRow = 0
-    beginColumn = 0
-    endRow = 3
-    endColumn = 3
-    for x in range(sudoku_number):
-        sub_grid = []
-        for i in range(beginRow, endRow):
-            for j in range(beginColumn, endColumn):
+    colB = 0
+    colE = 3
+    rowB = 0
+    rowE = 3
+    count = 0
+    sub_grid = []
+    while (count < 9):
+        for i in range(colB, colE):
+            for j in range(rowB, rowE):
                 sub_grid.append(grid[i][j])
+        if (colB <= 3 or colE <= 6):
+            colB += 3
+            colE += 3
+        count += 1
+        if ((count == 3 or count == 6) and (rowB <= 3 or rowE <= 6)):
+            rowB += 3
+            rowE += 3
+            colB = 0
+            colE = 3
         thread_c = threading.Thread(target=getFlags, args=(sub_grid,))
         listThreads.append(thread_c)
         thread_c.start()
+        sub_grid = []
 
 
 # Support functions to calculate the values of getFlags and getArrFlag.
@@ -84,5 +94,18 @@ checkColumns(grid)
 checkSubGrids(grid)
 
 timeB = datetime.datetime.now()
-print(totalFlags, timeB - timeA)
-print(listThreads)
+
+flag = totalFlags[0] and totalFlags[1]
+
+def resultSudoku(flag, arr_flag, index):
+    if index < 27:
+        flag = flag and arr_flag[index]
+        index += 1
+        resultSudoku(flag, arr_flag, index)
+    else:
+        print("The sudoku is", "correct." if flag else "incorrect.")
+
+resultSudoku(flag, totalFlags, 2)
+
+print ("Time", timeB - timeA)
+print("Number of threads used:", len(listThreads))
