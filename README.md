@@ -68,12 +68,12 @@ if the Sudoku puzzle is valid.
 
 This repository includes some examples in *Python* to understand the functionality 
 of thread library and its options. For example: 
-- threadingUsingClass.py
-- threadingUsingFunction.py
-- threadingMethods.py
-- joinMethodFast.py
-- joinMethodSlow.py
-- timeThread.py
+- threading_using_class.py
+- threading_using_function.py
+- threading_methods.py
+- join_fast_method.py
+- join_slow_method.py
+- time_thread.py
 
 ## References
 *Siva, C. S. (2018, 14 noviembre). Python Thread Tutorial (Part 1). Recuperado 16 marzo, 2019, de https://dzone.com/articles/python-thread-part-1*
