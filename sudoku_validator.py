@@ -1,9 +1,9 @@
 import threading
 import datetime
 
-timeA = datetime.datetime.now()
+TIME_A = datetime.datetime.now()
 
-grid = [
+GRID = [
     [6, 2, 4, 5, 3, 9, 1, 8, 7],
     [5, 1, 9, 7, 2, 8, 6, 3, 4],
     [8, 3, 7, 6, 1, 4, 2, 9, 5],
@@ -15,97 +15,105 @@ grid = [
     [2, 8, 5, 4, 7, 3, 9, 1, 6],
 ]
 
-sudoku_number = 9
-totalFlags = []
-listThreads = []
+SUDOKU_NUMBER = 9
+
+total_flags = []
+list_threads = []
+
 
 # Check only the rows from later to do the analysis.
-def checkRows(grid):
-    for i in range(sudoku_number):
-        thread_a = threading.Thread(target=getFlags, args=(grid[i],))
-        listThreads.append(thread_a)
+def check_rows(grid):
+    for i in range(SUDOKU_NUMBER):
+        thread_a = threading.Thread(target=get_flags, args=(grid[i],))
+        list_threads.append(thread_a)
         thread_a.start()
 
 
 # Check only the columns from later to do the analysis
-def checkColumns(grid):
-    for i in range(sudoku_number):
+def check_columns(grid):
+    for i in range(SUDOKU_NUMBER):
         columns = []
-        for j in range(sudoku_number):
+        for j in range(SUDOKU_NUMBER):
             columns.append(grid[j][i])
-        thread_b = threading.Thread(target=getFlags, args=(columns,))
-        listThreads.append(thread_b)
+        thread_b = threading.Thread(target=get_flags, args=(columns,))
+        list_threads.append(thread_b)
         thread_b.start()
 
+
 # Check each sub grid from later to do the analysis
-def checkSubGrids(grid):
-    colB = 0
-    colE = 3
-    rowB = 0
-    rowE = 3
+def check_sub_grids(grid):
+    col_b = 0
+    col_e = 3
+    row_b = 0
+    row_e = 3
     count = 0
     sub_grid = []
-    while (count < 9):
-        for i in range(colB, colE):
-            for j in range(rowB, rowE):
+    while count < 9:
+        for i in range(col_b, col_e):
+            for j in range(row_b, row_e):
                 sub_grid.append(grid[i][j])
-        if (colB <= 3 or colE <= 6):
-            colB += 3
-            colE += 3
+        if col_b <= 3 or col_e <= 6:
+            col_b += 3
+            col_e += 3
         count += 1
-        if ((count == 3 or count == 6) and (rowB <= 3 or rowE <= 6)):
-            rowB += 3
-            rowE += 3
-            colB = 0
-            colE = 3
-        thread_c = threading.Thread(target=getFlags, args=(sub_grid,))
-        listThreads.append(thread_c)
+        if (count == 3 or count == 6) and (row_b <= 3 or row_e <= 6):
+            row_b += 3
+            row_e += 3
+            col_b = 0
+            col_e = 3
+        thread_c = threading.Thread(target=get_flags, args=(sub_grid,))
+        list_threads.append(thread_c)
         thread_c.start()
         sub_grid = []
 
 
 # Support functions to calculate the values of getFlags and getArrFlag.
 # Give an array with boolean values that will validate the data.
-def getFlags(arr_values):
-    arr_flag = [None] * sudoku_number
-    for i in range(sudoku_number):
+def get_flags(arr_values):
+    arr_flag = [None] * SUDOKU_NUMBER
+
+    for i in range(SUDOKU_NUMBER):
         if arr_flag[arr_values[i] - 1] is None:
             arr_flag[arr_values[i] - 1] = True
         else:
             arr_flag[arr_values[i] - 1] = False
-    for i in range(sudoku_number):
-        if arr_flag[i] is None: arr_flag[i] = False;
-    flag = arr_flag[0] and arr_flag[1]
-    getArrFlag(flag, arr_flag, 2)
+
+    for i in range(SUDOKU_NUMBER):
+        if arr_flag[i] is None: arr_flag[i] = False
+
+    are_equal = arr_flag[0] and arr_flag[1]
+    get_arr_flag(are_equal, arr_flag, 2)
 
 
 # Recursive function that give like result an array of flags.
-def getArrFlag(flag, arr_flag, index):
+def get_arr_flag(entry_flag, arr_flag, index):
     if index < 9:
-        flag = flag and arr_flag[index]
+        entry_flag = entry_flag and arr_flag[index]
         index += 1
-        getArrFlag(flag, arr_flag, index)
+        get_arr_flag(entry_flag, arr_flag, index)
     else:
-        totalFlags.append(flag)
+        total_flags.append(entry_flag)
 
 
-checkRows(grid)
-checkColumns(grid)
-checkSubGrids(grid)
+check_rows(GRID)
+check_columns(GRID)
+check_sub_grids(GRID)
 
-timeB = datetime.datetime.now()
+time_b = datetime.datetime.now()
 
-flag = totalFlags[0] and totalFlags[1]
+flag = total_flags[0] and total_flags[1]
 
-def resultSudoku(flag, arr_flag, index):
+
+def result_sudoku(flag, arr_flag, index):
     if index < 27:
         flag = flag and arr_flag[index]
         index += 1
-        resultSudoku(flag, arr_flag, index)
+        result_sudoku(flag, arr_flag, index)
     else:
         print("The sudoku is", "correct." if flag else "incorrect.")
 
-resultSudoku(flag, totalFlags, 2)
 
-print ("Time", timeB - timeA)
-print("Number of threads used:", len(listThreads))
+result_sudoku(flag, total_flags, 2)
+
+print("Time", time_b - TIME_A)
+print("Number of threads used:", len(list_threads))
