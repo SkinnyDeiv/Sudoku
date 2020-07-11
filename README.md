@@ -1,4 +1,4 @@
-# Second project of Operating Systems
+# Sudoku Solution Validator
 
 For the second project we have to create a *Sudoku Solution Validator*. This project is taken of book **Operating System 
 Concepts** by **Abraham Silberschatz 9th edition**. The project is described like: 
@@ -74,6 +74,12 @@ of thread library and its options. For example:
 - join_fast_method.py
 - join_slow_method.py
 - time_thread.py
+
+## Tests 
+
+To test the functionality of the validator run the next command: 
+
+- ` python3 -m unittest test_Validator.py`
 
 ## References
 *Siva, C. S. (2018, 14 noviembre). Python Thread Tutorial (Part 1). Recuperado 16 marzo, 2019, de https://dzone.com/articles/python-thread-part-1*
