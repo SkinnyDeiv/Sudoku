@@ -1,5 +1,5 @@
 from unittest import TestCase
-from Validator import Validator
+from models.Validator import Validator
 
 
 class TestValidator(TestCase):
