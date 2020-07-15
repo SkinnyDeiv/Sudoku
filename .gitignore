@@ -1,5 +1,9 @@
+# pycharm project files
 /.idea
-../Docs
+
+# python environment
 /venv
+
+# cache
 /__pycache__
 /models/__pycache__
