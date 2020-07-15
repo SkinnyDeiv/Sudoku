@@ -4,39 +4,37 @@ import random
 class SudokuBoard:
 
     def __init__(self):
-        self.grid = [[] for _ in range(9)]
+        self.grid = [[0] * 9 for _ in range(9)]
 
         attempts, row_num = 0, 0
         while row_num < 9:
             while not self._build_new_row(row_num):
-                self.grid[row_num] = []
+                self.grid[row_num] = [0] * 9
                 attempts += 1
 
                 if attempts > 50:
-                    self.grid = [[] for _ in range(9)]
+                    self.grid = [[0 for _ in range(9)] for _ in range(9)]
                     attempts, row_num = 0, 0
                     continue
 
             row_num += 1
 
     def _build_new_row(self, row_num):
-        row = self.grid[row_num]
         for column_num in range(9):
             available_numbers = self._get_available_numbers(row_num, column_num)
             if not available_numbers:
                 return False
             number = random.choice(list(available_numbers))
-            row.append(number)
+            self.grid[row_num][column_num] = number
         return True
 
     def _get_available_numbers(self, row_num, column_num):
-        row_occupied_numbers = {self.grid[row_num][j] for j in range(column_num)}
-        column_occupied_numbers = {self.grid[i][column_num] for i in range(row_num)}
+        row_occupied_numbers = {self.grid[row_num][j] for j in range(9)}
+        column_occupied_numbers = {self.grid[i][column_num] for i in range(9)}
         sub_grid_low_row = row_num - row_num % 3
         sub_grid_low_column = column_num - column_num % 3
-        sub_grid_occupied_numbers = {self.grid[i][j] for i in range(sub_grid_low_row, row_num)
-                                     for j in range(sub_grid_low_column, sub_grid_low_column + 3)} |\
-                                    {self.grid[row_num][j] for j in range(sub_grid_low_column, column_num)}
+        sub_grid_occupied_numbers = {self.grid[i][j] for i in range(sub_grid_low_row, sub_grid_low_row + 3)
+                                     for j in range(sub_grid_low_column, sub_grid_low_column + 3)}
         occupied_numbers = row_occupied_numbers | column_occupied_numbers | sub_grid_occupied_numbers
         return {1, 2, 3, 4, 5, 6, 7, 8, 9} - occupied_numbers
 
@@ -77,5 +75,5 @@ class SudokuBoard:
 
 for i in range(0, 100):
     sb = SudokuBoard()
-    sb.print()
+    #sb.print()
     print(sb.is_valid)
