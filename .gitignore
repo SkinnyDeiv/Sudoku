@@ -1,3 +1,5 @@
 /.idea
 ../Docs
 /venv
+/__pycache__
+/models/__pycache__

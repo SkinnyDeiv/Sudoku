@@ -31,6 +31,7 @@ class SudokuBoard:
 
     def _get_available_numbers(self, row_num, column_num):
         row_occupied_numbers = {self.grid[row_num][j] for j in range(column_num)}
+        print(row_occupied_numbers)
         column_occupied_numbers = {self.grid[i][column_num] for i in range(row_num)}
         sub_grid_low_row = row_num - row_num % 3
         sub_grid_low_column = column_num - column_num % 3
@@ -75,7 +76,7 @@ class SudokuBoard:
             print(row)
 
 
-for i in range(0, 100):
+for i in range(0, 1):
     sb = SudokuBoard()
     sb.print()
     print(sb.is_valid)
