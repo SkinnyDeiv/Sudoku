@@ -1,44 +1,38 @@
 import random
 
-from models.SudokuBoard import SudokuBoard
+from api.models.SudokuBoard import SudokuBoard
 
 
 class SudokuSolver:
 
     def __init__(self, sudoku_board):
         self.sudoku_board = sudoku_board
+        self._num_empty_cells = len(sudoku_board.get_empty_cells())
+        self.difficult_coefficient = 0
 
     def solve(self):
         solutions = []
         self.solve_traversal(self.sudoku_board, solutions)
+
         if len(solutions) > 1:
             raise Exception("Sudoku has more than one solution")
+        self.difficult_coefficient /= self._num_empty_cells
         return solutions[0]
 
-    @staticmethod
-    def solve_traversal(sudoku_board, solutions):
-
+    def solve_traversal(self, sudoku_board, solutions):
         cells_to_solve = sudoku_board.get_empty_cells()
         if not cells_to_solve:
-            if not sudoku_board in solutions:
+            if sudoku_board not in solutions:
                 solutions.append(sudoku_board)
-                return
+            return
         cells_to_solve.sort(key=lambda coords: len(sudoku_board.get_available_numbers(coords[0], coords[1])))
 
         row_num, column_num = cells_to_solve.pop(0)
         available_numbers = sudoku_board.get_available_numbers(row_num, column_num)
 
+        self.difficult_coefficient += len(available_numbers)
+
         for number in available_numbers:
             sudoku_copy = sudoku_board.clone()
             sudoku_copy.assign(row_num, column_num, number)
-            SudokuSolver.solve_traversal(sudoku_copy, solutions)
-
-
-sudoku = SudokuBoard()
-sudoku.build()
-sudoku_orig = sudoku.clone()
-for i in range(40):
-    sudoku.clear_cell(random.randrange(9), random.randrange(9))
-solver = SudokuSolver(sudoku)
-solution = solver.solve()
-print(solution == sudoku_orig)
+            self.solve_traversal(sudoku_copy, solutions)
