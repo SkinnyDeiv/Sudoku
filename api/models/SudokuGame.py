@@ -26,7 +26,12 @@ class SudokuGameGenerator:
         difficult_coefficient = 1
         for _ in range(iterations):
             new_playable = playable.clone()
-            new_playable.clear_cell(random.randrange(9), random.randrange(9))
+
+            row_num, column_num = random.randrange(9), random.randrange(9)
+            while new_playable.is_cell_empty(row_num, column_num):
+                row_num, column_num = random.randrange(9), random.randrange(9)
+            new_playable.clear_cell(row_num, column_num)
+
             solver = SudokuSolver(new_playable)
             try:
                 solver.solve()
@@ -65,5 +70,5 @@ class SudokuGame:
                str(self.playable)
 
 
-sg = SudokuGameGenerator.generate_puzzle(400)
+sg = SudokuGameGenerator.generate_puzzle(70)
 print(str(sg))

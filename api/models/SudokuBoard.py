@@ -74,6 +74,9 @@ class SudokuBoard:
     def clear_cell(self, row_num, column_num):
         self._grid[row_num][column_num] = 0
 
+    def is_cell_empty(self, row_num, column_num):
+        return self._grid[row_num][column_num] == 0
+
     def clone(self):
         new_sudoku_grid = copy.deepcopy(self._grid)
         return SudokuBoard(new_sudoku_grid)
