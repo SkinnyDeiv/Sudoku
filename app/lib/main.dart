@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flare_flutter/flare_actor.dart';
-import 'package:flutter/scheduler.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(Sudoku());
 }
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+class Sudoku extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: FlareActor('assets/blackblock.flr', animation: "blackblock",),
+      child: FlareActor(
+        'assets/blackblock.flr',
+        animation: "blackblock",
+      ),
     );
   }
 }
