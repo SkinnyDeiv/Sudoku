@@ -74,6 +74,9 @@ class SudokuBoard:
     def clear_cell(self, row_num, column_num):
         self._grid[row_num][column_num] = 0
 
+    def is_cell_empty(self, row_num, column_num):
+        return self._grid[row_num][column_num] == 0
+
     def clone(self):
         new_sudoku_grid = copy.deepcopy(self._grid)
         return SudokuBoard(new_sudoku_grid)
@@ -90,7 +93,5 @@ class SudokuBoard:
     def __eq__(self, other):
         return self._grid == other.grid
 
-    def print(self):
-        print("** Sudoku Board **")
-        for row in self._grid:
-            print(row)
+    def __str__(self):
+        return "\n".join([str(row) for row in self._grid])
