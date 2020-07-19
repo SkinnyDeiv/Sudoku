@@ -1,6 +1,6 @@
 import random
 
-from api.models.SudokuBoard import SudokuBoard
+from models.SudokuBoard import SudokuBoard
 
 
 class SudokuSolver:

@@ -2,8 +2,8 @@ import random
 
 from enum import Enum
 
-from api.models.SudokuBoard import SudokuBoard
-from api.models.SudokuSolver import SudokuSolver
+from models.SudokuBoard import SudokuBoard
+from models.SudokuSolver import SudokuSolver
 
 
 class DifficultLevel(Enum):
